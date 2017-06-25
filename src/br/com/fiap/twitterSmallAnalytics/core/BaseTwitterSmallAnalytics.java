@@ -15,7 +15,10 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class BaseTwitterSmallAnalytics {
 
-	
+	/**
+	 * TODO implementar tweets antigos
+	 * @param search
+	 */
 	public void runSearchTweets(String search){
 		/**
 		 * http://twitter4j.org/en/index.html
