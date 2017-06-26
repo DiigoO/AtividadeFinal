@@ -3,8 +3,9 @@ package br.com.fiap.twitterSmallAnalytics.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.fiap.twitterSmallAnalytics.connection.Connection;
 import br.com.fiap.twitterSmallAnalytics.entity.StatusJSONImpl;
-import br.com.fiap.twitterSmallAnalytics.helper.Order;
+import br.com.fiap.twitterSmallAnalytics.util.Order;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
@@ -35,6 +36,9 @@ public class BaseTwitterSmallAnalytics {
 		 
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		Twitter twitter = tf.getInstance(); 
+//		Connection con = new Connection();
+//		con.configureConf();
+//		Twitter twitter = con.conexao(); 
 		QueryResult result = null;
 		
 		/**

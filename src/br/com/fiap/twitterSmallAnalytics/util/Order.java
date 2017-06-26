@@ -1,4 +1,4 @@
-package br.com.fiap.twitterSmallAnalytics.helper;
+package br.com.fiap.twitterSmallAnalytics.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
