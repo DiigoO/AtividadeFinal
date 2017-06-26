@@ -1,9 +1,6 @@
 package br.com.fiap.twitterSmallAnalytics.core;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import br.com.fiap.twitterSmallAnalytics.entity.StatusJSONImpl;
@@ -75,32 +72,33 @@ public class BaseTwitterSmallAnalytics {
 		Order order = new Order();
 //		System.out.println(user);
 		
-//		System.out.println("\nQuantidade de Tweets: "+result.getCount());
-//		System.out.println("Quantidade de reTweets: "+countRetweets);
-//		System.out.println("Quantidade de Favoritacoes: "+countFavort);
-		
 		System.out.println("1. Quantidade por dia de tweets da última semana.\n"+ result.getCount()
-					+ "\n2. Quantidade por dia de retweets da última semana.\n"+ countRetweets
-					+ "\n3. Quantidade por dia de favoritações da última semana.\n"+ countFavort
+					+ "\n2. Quantidade por dia de retweets da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()				
+					+ "\n3. Quantidade por dia de favoritações da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
 					+ "\n4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o último nome.\n" + order.orderObj(user, 0)
 					+ "\n5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.\n" + order.orderObj(user, 1));
 	    
-	     /**
+//	     postTweet(twitter, result, countRetweets, countFavort, user, order);
+	     
+	}
+
+	private void postTweet(Twitter twitter, QueryResult result, int countRetweets, int countFavort,
+			List<StatusJSONImpl> user, Order order) {
+		/**
 	      * post a Tweet
 	      */
-//	    Status status = null;
-//		try {
-//			status = twitter.updateStatus("1. Quantidade por dia de tweets da última semana. "+ result.getCount()
-//					+ "2. Quantidade por dia de retweets da última semana. "+ countRetweets
-//					+ "3. Quantidade por dia de favoritações da última semana."+ countFavort
-//					+ "4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o último nome." + order.orderObj(user, 0)
-//					+ "5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente." + order.orderObj(user, 1));
-//		} catch (TwitterException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	     System.out.println("Successfully updated the status to [" + status.getText() + "].");
-	     
+	    Status status = null;
+		try {
+			status = twitter.updateStatus("1.Tweets dia "+ result.getCount()
+		+ "\n2.ReTweets dia "+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum() 
+		+ "\n3.Favoritos dia "+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
+		+ "\n4.Sort por nome, exibindo primeiro e último " + order.orderObj(user, 0)
+		+ "\n5.Sort por data, exibindo primeiro e último " + order.orderObj(user, 1));
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     System.out.println("Successfully updated the status to [" + status.getText() + "].");
 	}
 	
 	
