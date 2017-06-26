@@ -1,5 +1,6 @@
 package br.com.fiap.twitterSmallAnalytics.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class StatusJSONImpl implements Comparable<StatusJSONImpl> {
@@ -8,6 +9,8 @@ public class StatusJSONImpl implements Comparable<StatusJSONImpl> {
 	private Date data;
 	private int reTweets;
 	private int favoritos;
+	
+	private static final SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy HH:mm:SS");
 
 	public StatusJSONImpl() {
 		super();
@@ -42,13 +45,13 @@ public class StatusJSONImpl implements Comparable<StatusJSONImpl> {
 		return data;
 	}
 
-
-
 	public void setData(Date data) {
 		this.data = data;
 	}
-
-
+	
+	public String getDataStr(){
+		return dt.format(data);
+	}
 
 	public int getReTweets() {
 		return reTweets;
@@ -76,7 +79,7 @@ public class StatusJSONImpl implements Comparable<StatusJSONImpl> {
 
 	@Override
 	public String toString() {
-		return "\nStatusJSONImpl [nome=" + nome + ", data=" + data+"]";
+		return "StatusJSONImpl [nome=" + nome + ", data=" + getDataStr()+"] ";
 	}
 
 	@Override

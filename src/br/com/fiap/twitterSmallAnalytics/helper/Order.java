@@ -1,51 +1,82 @@
 package br.com.fiap.twitterSmallAnalytics.helper;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import br.com.fiap.twitterSmallAnalytics.entity.StatusJSONImpl;
 
 public class Order{
-
-	public String orderObj(List<StatusJSONImpl> user, int code){
-		
-		if(code == 0){
-			Collections.sort(user, new Comparator<StatusJSONImpl>() {
+	
+	public MinAndMax calculateMinAndMaxByName(List<StatusJSONImpl> users){
+		return calculateMinAndMax(users, Order.SortField.NAME);		
+	}
+	
+	public MinAndMax calculateMinAndMaxByDate(List<StatusJSONImpl> users){
+		return calculateMinAndMax(users, Order.SortField.DATE);		
+	}
+	
+	private MinAndMax calculateMinAndMax(List<StatusJSONImpl> users, Order.SortField sortField){
+				
+		if(sortField.equals(Order.SortField.DATE)){
+			Collections.sort(users, new Comparator<StatusJSONImpl>() {
 				@Override
 				public int compare(StatusJSONImpl obj2, StatusJSONImpl obj1){
 					return  obj1.getData().compareTo(obj2.getData());
 				}
 			});
+						
+			return new MinAndMax(users.get(users.size()-1), users.get(0), sortField);
 			
-			SimpleDateFormat dt = new SimpleDateFormat("dd-MM-yyy hh:mm:ss");
-			Date OnderDate = null;
-			Date NewestDate = null;
-	        try {
-	        	OnderDate = dt.parse(user.get(user.size()-1).getData().toString());
-	        	NewestDate = dt.parse(user.get(0).getData().toString());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			return OnderDate + " <> " + NewestDate;
-			
-		}else if(code == 1){
-			Collections.sort(user, new Comparator<StatusJSONImpl>() {
+		}else if(sortField.equals(Order.SortField.NAME)){
+			Collections.sort(users, new Comparator<StatusJSONImpl>() {
 				@Override
 				public int compare(StatusJSONImpl obj2, StatusJSONImpl obj1){
 					return  obj1.getNome().compareTo(obj2.getNome());
 				}
 			});
 			
-			return (user.get(user.size()-1).getNome() + " <> " + user.get(0).getNome());
+			return new MinAndMax(users.get(users.size()-1), users.get(0), sortField);
 		}else{
-			throw new RuntimeException("Não foi possivel ordenar a lista! Code da lista não foi passado.");
+			throw new RuntimeException("SortField unknown: "+sortField);
 		}
 	}
 	
+	private enum SortField {
+		NAME, DATE
+	}
+	
+	public class MinAndMax {
+		private final StatusJSONImpl min;
+		private final StatusJSONImpl max;
+		private final SortField sortField;
+		
+		public MinAndMax(StatusJSONImpl min, StatusJSONImpl max, SortField sortField){
+			this.min = min;
+			this.max = max;
+			this.sortField = sortField;
+		}
+
+		public StatusJSONImpl getMin() {
+			return min;
+		}
+
+		public StatusJSONImpl getMax() {
+			return max;
+		}
+
+		@Override
+		public String toString() {
+			if(SortField.NAME.equals(sortField)){
+				return "StatusJSONImpl::nome [min=\"" + min.getNome() + "\", max=\"" + max.getNome() + "\"]";
+			}
+			if(SortField.DATE.equals(sortField)){
+				return "StatusJSONImpl::data [min=\"" + min.getDataStr() + "\", max=\"" + max.getDataStr() + "\"]";
+			}
+			
+			return "MinAndMax [min=" + min + ", max=" + max + "]";
+		}
+		
+	}
 }
