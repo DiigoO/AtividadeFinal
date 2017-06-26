@@ -13,6 +13,7 @@ public class StatusJSONImpl implements Comparable<StatusJSONImpl> {
 		super();
 	}
 	
+	
 	public String getNickname() {
 		return nickname;
 	}
@@ -32,7 +33,7 @@ public class StatusJSONImpl implements Comparable<StatusJSONImpl> {
 
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.substring(0, 1).toUpperCase() + nome.substring(1);
 	}
 
 
@@ -72,6 +73,7 @@ public class StatusJSONImpl implements Comparable<StatusJSONImpl> {
 	}
 
 
+
 	@Override
 	public String toString() {
 		return "\nStatusJSONImpl [nome=" + nome + ", data=" + data+"]";
@@ -80,7 +82,7 @@ public class StatusJSONImpl implements Comparable<StatusJSONImpl> {
 	@Override
 	public int compareTo(StatusJSONImpl o) {
 		// TODO Auto-generated method stub
-		return o.nome.compareTo(nome);
+		return nome.compareTo(o.nome);
 	}
 	
 }
