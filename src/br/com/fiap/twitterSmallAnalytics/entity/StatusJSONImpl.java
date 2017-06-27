@@ -76,11 +76,12 @@ public class StatusJSONImpl implements Comparable<StatusJSONImpl> {
 	}
 
 
-
 	@Override
 	public String toString() {
-		return "StatusJSONImpl [nome=" + nome + ", data=" + getDataStr()+"] ";
+		return "StatusJSONImpl [nickname=" + nickname + ", nome=" + nome + ", data=" + data + ", reTweets=" + reTweets
+				+ ", favoritos=" + favoritos + "]";
 	}
+
 
 	@Override
 	public int compareTo(StatusJSONImpl o) {
