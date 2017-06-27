@@ -41,6 +41,9 @@ public class BaseTwitterSmallAnalytics {
 		 */
 		try {
 			Query query = new Query(search);
+			query.since("2017-06-19");
+			query.until("2017-06-26");
+			query.count(9000000);
 			result = twitter.search(query);
 		} catch (TwitterException e) {
 			// TODO Auto-generated catch block
