@@ -27,25 +27,20 @@ public class BaseTwitterSmallAnalytics {
 	 */
 	public void runSearchTweets(String search) throws FileNotFoundException, TwitterException{
 
+		Order order = new Order();
+		List<StatusJSONImpl> user = new ArrayList<>();
+		int countResult = 0;
 		Connection con = new Connection();
 		con.configureConf();
-		Twitter twitter = con.conexao(); 
-		QueryResult result = null;
-		
-		/**
-		 * Search Tweets
-		 * so traz de 24h ou da ultima semana dependendo da carga da API
-		 * https://stackoverflow.com/questions/7974999/retrieving-tweets-from-twitter-using-twitter4j
-		 */
+		Twitter twitter = con.conexao();		
 		Query query = new Query(search);
+		
 		LocalDate hoje = LocalDate.now();
 		query.setSince(hoje.minusDays(7).toString());
 		query.setUntil(hoje.plusDays(1).toString());
-//		query.count(100);
-		result = twitter.search(query);
 		
-		List<StatusJSONImpl> user = new ArrayList<>();
-		int countResult = 0;
+		QueryResult result = twitter.search(query);
+		
 		while(result.hasNext()){
 			query = result.nextQuery();
 
@@ -63,9 +58,6 @@ public class BaseTwitterSmallAnalytics {
 			result = twitter.search(query);
 			countResult = countResult + result.getCount();
 		}
-	     
-		Order order = new Order();
-		System.out.println(user);
 		
 		System.out.println("1. Quantidade por dia de tweets da última semana.\n"+ countResult
 					+ "\n2. Quantidade por dia de retweets da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()				
@@ -73,15 +65,18 @@ public class BaseTwitterSmallAnalytics {
 					+ "\n4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o último nome.\n" + order.calculateMinAndMaxByName(user)
 					+ "\n5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.\n" + order.calculateMinAndMaxByDate(user));
 	    
-//	     postTweet(twitter, result, countRetweets, countFavort, user, order);
+//	     postTweet(twitter, result, user, order);
 	     
 	}
 
-	private void postTweet(Twitter twitter, QueryResult result, int countRetweets, int countFavort,
-			List<StatusJSONImpl> user, Order order) {
-		/**
-	      * post a Tweet
-	      */
+	/**
+	 * Post a tweet
+	 * @param twitter
+	 * @param result
+	 * @param user
+	 * @param order
+	 */
+	private void postTweet(Twitter twitter, QueryResult result,List<StatusJSONImpl> user, Order order) {
 	    Status status = null;
 		try {
 			status = twitter.updateStatus("1.Tweets dia "+ result.getCount()
