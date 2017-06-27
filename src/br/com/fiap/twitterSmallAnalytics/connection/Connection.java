@@ -1,10 +1,11 @@
 package br.com.fiap.twitterSmallAnalytics.connection;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import twitter4j.QueryResult;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
@@ -14,10 +15,10 @@ public class Connection {
 	private static Connection connection;	
 	private Properties prop = new Properties();
 	
-	public void configureConf(){
-	    InputStream file = getClass().getClassLoader().getResourceAsStream("twitter4j.properties");
+	public void configureConf() throws FileNotFoundException{
+	    InputStream input = new FileInputStream("resource/twitter4j.properties");
 		try {
-			prop.load(file);
+			prop.load(input);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

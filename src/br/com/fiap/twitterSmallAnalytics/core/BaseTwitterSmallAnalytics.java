@@ -1,5 +1,6 @@
 package br.com.fiap.twitterSmallAnalytics.core;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,26 +20,18 @@ public class BaseTwitterSmallAnalytics {
 	/**
 	 * TODO implementar tweets antigos
 	 * @param search
+	 * @throws FileNotFoundException 
 	 */
-	public void runSearchTweets(String search){
+	public void runSearchTweets(String search) throws FileNotFoundException{
 		/**
 		 * http://twitter4j.org/en/index.html
 		 * https://github.com/yusuke/twitter4j
 		 * https://dev.twitter.com/rest/public/search
 		 */		
 		
-		 ConfigurationBuilder cb = new ConfigurationBuilder();
-		 cb.setDebugEnabled(true)
-		 	.setOAuthConsumerKey("UC2hgX30dz7CLAjMqaPJ7NaRi")
-		    .setOAuthConsumerSecret("8CDa39mdLrcFqyJRXdHiOYJLdqVChakerByoX8AkYQ23GBZQjG")
-		    .setOAuthAccessToken("877588033750675456-8h84QaiqJbgJR8hhYpazbcSD3gOPFtC")
-		    .setOAuthAccessTokenSecret("SKazR0T3tPG5Sy6PwWfqaoTgY9NxXmxxQUOLmYstKJHTu");
-		 
-		TwitterFactory tf = new TwitterFactory(cb.build());
-		Twitter twitter = tf.getInstance(); 
-//		Connection con = new Connection();
-//		con.configureConf();
-//		Twitter twitter = con.conexao(); 
+		Connection con = new Connection();
+		con.configureConf();
+		Twitter twitter = con.conexao(); 
 		QueryResult result = null;
 		
 		/**
