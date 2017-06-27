@@ -1,6 +1,7 @@
 package br.com.fiap.twitterSmallAnalytics.core;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,6 @@ import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
 
 public class BaseTwitterSmallAnalytics {
 
@@ -21,14 +20,13 @@ public class BaseTwitterSmallAnalytics {
 	 * TODO implementar tweets antigos
 	 * @param search
 	 * @throws FileNotFoundException 
+	 * http://twitter4j.org/en/index.html
+	 * https://github.com/yusuke/twitter4j
+	 * https://dev.twitter.com/rest/public/search
+	 * @throws TwitterException 
 	 */
-	public void runSearchTweets(String search) throws FileNotFoundException{
-		/**
-		 * http://twitter4j.org/en/index.html
-		 * https://github.com/yusuke/twitter4j
-		 * https://dev.twitter.com/rest/public/search
-		 */		
-		
+	public void runSearchTweets(String search) throws FileNotFoundException, TwitterException{
+
 		Connection con = new Connection();
 		con.configureConf();
 		Twitter twitter = con.conexao(); 
@@ -39,40 +37,37 @@ public class BaseTwitterSmallAnalytics {
 		 * so traz de 24h ou da ultima semana dependendo da carga da API
 		 * https://stackoverflow.com/questions/7974999/retrieving-tweets-from-twitter-using-twitter4j
 		 */
-		try {
-			Query query = new Query(search);
-			query.since("2017-06-19");
-			query.until("2017-06-26");
-			query.count(9000000);
-			result = twitter.search(query);
-		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		int countRetweets = 0;
-		int countFavort = 0;
+		Query query = new Query(search);
+		LocalDate hoje = LocalDate.now();
+		query.setSince(hoje.minusDays(7).toString());
+		query.setUntil(hoje.plusDays(1).toString());
+//		query.count(100);
+		result = twitter.search(query);
 		
 		List<StatusJSONImpl> user = new ArrayList<>();
-		
-	     for (Status status : result.getTweets()) {
-	    	 StatusJSONImpl statusUser = new StatusJSONImpl();
+		int countResult = 0;
+		while(result.hasNext()){
+			query = result.nextQuery();
 
-	    	 countRetweets = countRetweets + status.getRetweetCount();
-	    	 countFavort = countFavort + status.getFavoriteCount();
-	    	 
-	    	 statusUser.setData(status.getCreatedAt());
-	    	 statusUser.setNickname(status.getUser().getScreenName());
-	    	 statusUser.setNome(status.getUser().getName());
-	    	 statusUser.setReTweets(status.getRetweetCount());
-	    	 statusUser.setFavoritos(status.getFavoriteCount());
-	    	 	    	 
-	    	 user.add(statusUser);
-	     }
+			 for (Status status : result.getTweets()) {
+		    	 StatusJSONImpl statusUser = new StatusJSONImpl();	    	 
+		    	 statusUser.setData(status.getCreatedAt());
+		    	 statusUser.setNickname(status.getUser().getScreenName());
+		    	 statusUser.setNome(status.getUser().getName());
+		    	 statusUser.setReTweets(status.getRetweetCount());
+		    	 statusUser.setFavoritos(status.getFavoriteCount());
+		    	 
+		    	 user.add(statusUser);
+		     }
+			 
+			result = twitter.search(query);
+			countResult = countResult + result.getCount();
+		}
 	     
 		Order order = new Order();
 		System.out.println(user);
 		
-		System.out.println("1. Quantidade por dia de tweets da última semana.\n"+ result.getCount()
+		System.out.println("1. Quantidade por dia de tweets da última semana.\n"+ countResult
 					+ "\n2. Quantidade por dia de retweets da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()				
 					+ "\n3. Quantidade por dia de favoritações da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
 					+ "\n4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o último nome.\n" + order.calculateMinAndMaxByName(user)
