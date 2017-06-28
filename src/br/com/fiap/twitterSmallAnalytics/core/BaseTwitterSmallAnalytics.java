@@ -20,17 +20,15 @@ public class BaseTwitterSmallAnalytics {
 	 * @param search
 	 * @throws FileNotFoundException 
 	 * http://twitter4j.org/en/index.html
-	 * https://github.com/yusuke/twitter4j
 	 * https://dev.twitter.com/rest/public/search
+	 * http://twitter4j.org/en/javadoc.html
 	 * @throws TwitterException 
 	 */
-	public void runSearchTweets(String search) throws FileNotFoundException, TwitterException{
+	public void searchTweets(String search) throws FileNotFoundException, TwitterException{
 
-		Order order = new Order();
 		List<StatusJSONImpl> user = new ArrayList<>();
 		int countResult = 0;
 		Connection con = new Connection();
-		con.configureConf();
 		Twitter twitter = con.conexao();		
 		Query query = new Query(search);
 		
@@ -58,13 +56,15 @@ public class BaseTwitterSmallAnalytics {
 			countResult = countResult + result.getCount();
 		}
 		
+		Order order = new Order();
+
 		System.out.println("1. Quantidade por dia de tweets da última semana.\n"+ countResult
 					+ "\n2. Quantidade por dia de retweets da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()				
 					+ "\n3. Quantidade por dia de favoritações da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
 					+ "\n4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o último nome.\n" + order.calculateMinAndMaxByName(user)
 					+ "\n5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.\n" + order.calculateMinAndMaxByDate(user));
 	    
-//	     postTweet(twitter, result, user, order);
+//	     postTweet(twitter, result, user);
 	     
 	}
 
@@ -75,7 +75,8 @@ public class BaseTwitterSmallAnalytics {
 	 * @param user
 	 * @param order
 	 */
-	private void postTweet(Twitter twitter, QueryResult result,List<StatusJSONImpl> user, Order order) {
+	private void postTweet(Twitter twitter, QueryResult result,List<StatusJSONImpl> user) {
+		Order order = new Order();
 	    Status status = null;
 		try {
 			status = twitter.updateStatus("1.Tweets dia "+ result.getCount()

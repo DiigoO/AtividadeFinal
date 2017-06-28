@@ -1,6 +1,5 @@
 package br.com.fiap.twitterSmallAnalytics.util;
 
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -77,6 +76,5 @@ public class Order{
 			
 			return "MinAndMax [min=" + min + ", max=" + max + "]";
 		}
-		
 	}
 }

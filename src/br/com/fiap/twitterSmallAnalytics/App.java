@@ -11,12 +11,10 @@ public class App {
 		
 		BaseTwitterSmallAnalytics base = new BaseTwitterSmallAnalytics();
 		try {
-			base.runSearchTweets("#java8");
+			base.searchTweets("#java8");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

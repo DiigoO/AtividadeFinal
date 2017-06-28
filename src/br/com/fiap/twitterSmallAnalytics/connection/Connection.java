@@ -12,10 +12,9 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class Connection {
 
-	private static Connection connection;	
 	private Properties prop = new Properties();
 	
-	public void configureConf() throws FileNotFoundException{
+	public Twitter conexao() throws FileNotFoundException {
 	    InputStream input = new FileInputStream("resource/twitter4j.properties");
 		try {
 			prop.load(input);
@@ -23,9 +22,7 @@ public class Connection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public Twitter conexao() {
+		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		 cb.setDebugEnabled(true)
 		 	.setOAuthConsumerKey(prop.getProperty("oauth.consumerKey"))

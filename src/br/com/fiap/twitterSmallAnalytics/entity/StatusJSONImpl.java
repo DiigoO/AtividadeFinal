@@ -3,7 +3,7 @@ package br.com.fiap.twitterSmallAnalytics.entity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class StatusJSONImpl implements Comparable<StatusJSONImpl> {
+public class StatusJSONImpl {
 	private String nickname;
 	private String nome;
 	private Date data;
@@ -74,19 +74,4 @@ public class StatusJSONImpl implements Comparable<StatusJSONImpl> {
 	public void setFavoritos(int favoritos) {
 		this.favoritos = favoritos;
 	}
-
-
-	@Override
-	public String toString() {
-		return "StatusJSONImpl [nickname=" + nickname + ", nome=" + nome + ", data=" + data + ", reTweets=" + reTweets
-				+ ", favoritos=" + favoritos + "]";
-	}
-
-
-	@Override
-	public int compareTo(StatusJSONImpl o) {
-		// TODO Auto-generated method stub
-		return nome.compareTo(o.nome);
-	}
-	
 }
