@@ -74,16 +74,18 @@ public class BaseTwitterSmallAnalytics {
 		tableModel.addRow(Arrays.asList("5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.", order.calculateMinAndMaxByDate(user)).toArray());
 
 		table = new JTable(tableModel);
-
-		JOptionPane.showMessageDialog(null, new JScrollPane(table));
+		JScrollPane jPaneScroll = new JScrollPane(table);
+		jPaneScroll.setHorizontalScrollBar(jPaneScroll.createHorizontalScrollBar());
+		JOptionPane.showMessageDialog(null, jPaneScroll);
 
 		System.out.println("1. Quantidade por dia de tweets da última semana.\n"+ countResult
 					+ "\n2. Quantidade por dia de retweets da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()				
 					+ "\n3. Quantidade por dia de favoritações da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
 					+ "\n4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o último nome.\n" + order.calculateMinAndMaxByName(user)
 					+ "\n5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.\n" + order.calculateMinAndMaxByDate(user));
-	    
-//	     postTweet(twitter, result, user);
+	    if(JOptionPane.showConfirmDialog(null, "Deseja publicar essa informa��o no Twitter ?") == JOptionPane.YES_OPTION) {
+	    	postTweet(twitter, result, user);
+	    }
 	     
 	}
 
