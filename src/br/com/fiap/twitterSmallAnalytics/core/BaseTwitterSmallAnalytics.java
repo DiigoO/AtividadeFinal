@@ -61,6 +61,7 @@ public class BaseTwitterSmallAnalytics {
 			countResult = countResult + result.getCount();
 		}
 		
+<<<<<<< HEAD
 		Order order = new Order();
 		
 		JTable table = null;
@@ -86,6 +87,9 @@ public class BaseTwitterSmallAnalytics {
 	    if(JOptionPane.showConfirmDialog(null, "Deseja publicar essa informa��o no Twitter ?") == JOptionPane.YES_OPTION) {
 	    	postTweet(twitter, result, user);
 	    }
+=======
+	     postTweet(twitter, result, user, countResult);
+>>>>>>> 2b792b425bb91dd7d73a58ba366c7948f3ffcb50
 	     
 	}
 
@@ -96,20 +100,35 @@ public class BaseTwitterSmallAnalytics {
 	 * @param user
 	 * @param order
 	 */
-	private void postTweet(Twitter twitter, QueryResult result,List<StatusJSONImpl> user) {
+	private void postTweet(Twitter twitter, QueryResult result,List<StatusJSONImpl> user, int countResult) {		
 		Order order = new Order();
+		
+		JTable table = null;
+		Object[] cols = { "Info.", "Quantidade" };
+		DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
+
+		tableModel.addRow(Arrays.asList("1. Quantidade por dia de tweets da ultima semana.", countResult).toArray());
+		tableModel.addRow(Arrays.asList("2. Quantidade por dia de retweets da ultima semana.", user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()).toArray());
+		tableModel.addRow(Arrays.asList("3. Quantidade por dia de favoritacoes da ultima semana.", user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()).toArray());
+		tableModel.addRow(Arrays.asList("4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o ultimo nome.", order.calculateMinAndMaxByName(user)).toArray());
+		tableModel.addRow(Arrays.asList("5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.", order.calculateMinAndMaxByDate(user)).toArray());
+
+		table = new JTable(tableModel);
+
+		JOptionPane.showMessageDialog(null, new JScrollPane(table));
+		
 	    Status status = null;
-		try {
-			status = twitter.updateStatus("1.Tweets dia "+ result.getCount()
-		+ "\n2.ReTweets dia "+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum() 
-		+ "\n3.Favoritos dia "+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
-		+ "\n4.Sort por nome, exibindo primeiro e último " + order.calculateMinAndMaxByName(user)
-		+ "\n5.Sort por data, exibindo primeiro e último " + order.calculateMinAndMaxByDate(user));
-		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	     System.out.println("Successfully updated the status to [" + status.getText() + "].");
+//		try {
+//			status = twitter.updateStatus("1.Tweets dia "+ result.getCount()
+//		+ "\n2.ReTweets dia "+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum() 
+//		+ "\n3.Favoritos dia "+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
+//		+ "\n4.Sort por nome, exibindo primeiro e último " + order.calculateMinAndMaxByName(user)
+//		+ "\n5.Sort por data, exibindo primeiro e último " + order.calculateMinAndMaxByDate(user));
+//		} catch (TwitterException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	     System.out.println("Successfully updated the status to [" + status.getText() + "].");
 	}
 	
 	
