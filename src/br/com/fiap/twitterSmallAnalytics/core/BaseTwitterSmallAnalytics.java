@@ -17,7 +17,6 @@ import twitter4j.TwitterException;
 public class BaseTwitterSmallAnalytics {
 
 	/**
-	 * TODO implementar tweets antigos
 	 * @param search
 	 * @throws FileNotFoundException 
 	 * http://twitter4j.org/en/index.html
