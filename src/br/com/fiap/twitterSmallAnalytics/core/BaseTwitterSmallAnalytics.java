@@ -3,7 +3,13 @@ package br.com.fiap.twitterSmallAnalytics.core;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import br.com.fiap.twitterSmallAnalytics.connection.Connection;
 import br.com.fiap.twitterSmallAnalytics.entity.StatusJSONImpl;
@@ -28,8 +34,7 @@ public class BaseTwitterSmallAnalytics {
 
 		List<StatusJSONImpl> user = new ArrayList<>();
 		int countResult = 0;
-		Connection con = new Connection();
-		Twitter twitter = con.conexao();		
+		Twitter twitter = Connection.conexao();		
 		Query query = new Query(search);
 		
 		LocalDate hoje = LocalDate.now();
@@ -57,6 +62,20 @@ public class BaseTwitterSmallAnalytics {
 		}
 		
 		Order order = new Order();
+		
+		JTable table = null;
+		Object[] cols = { "Info.", "Quantidade" };
+		DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
+
+		tableModel.addRow(Arrays.asList("1. Quantidade por dia de tweets da última semana.", countResult).toArray());
+		tableModel.addRow(Arrays.asList("2. Quantidade por dia de retweets da última semana.", user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()).toArray());
+		tableModel.addRow(Arrays.asList("3. Quantidade por dia de favoritações da última semana.", user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()).toArray());
+		tableModel.addRow(Arrays.asList("4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o último nome.", order.calculateMinAndMaxByName(user)).toArray());
+		tableModel.addRow(Arrays.asList("5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.", order.calculateMinAndMaxByDate(user)).toArray());
+
+		table = new JTable(tableModel);
+
+		JOptionPane.showMessageDialog(null, new JScrollPane(table));
 
 		System.out.println("1. Quantidade por dia de tweets da Ãºltima semana.\n"+ countResult
 					+ "\n2. Quantidade por dia de retweets da Ãºltima semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()				

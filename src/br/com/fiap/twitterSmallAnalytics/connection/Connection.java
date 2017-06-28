@@ -12,9 +12,8 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class Connection {
 
-	private Properties prop = new Properties();
-	
-	public Twitter conexao() throws FileNotFoundException {
+	public static Twitter conexao() throws FileNotFoundException {
+		Properties prop = new Properties();
 	    InputStream input = new FileInputStream("resource/twitter4j.properties");
 		try {
 			prop.load(input);
