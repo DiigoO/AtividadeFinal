@@ -61,17 +61,16 @@ public class BaseTwitterSmallAnalytics {
 			countResult = countResult + result.getCount();
 		}
 		
-<<<<<<< HEAD
 		Order order = new Order();
 		
 		JTable table = null;
 		Object[] cols = { "Info.", "Quantidade" };
 		DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
 
-		tableModel.addRow(Arrays.asList("1. Quantidade por dia de tweets da última semana.", countResult).toArray());
-		tableModel.addRow(Arrays.asList("2. Quantidade por dia de retweets da última semana.", user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()).toArray());
-		tableModel.addRow(Arrays.asList("3. Quantidade por dia de favoritações da última semana.", user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()).toArray());
-		tableModel.addRow(Arrays.asList("4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o último nome.", order.calculateMinAndMaxByName(user)).toArray());
+		tableModel.addRow(Arrays.asList("1. Quantidade por dia de tweets da ï¿½ltima semana.", countResult).toArray());
+		tableModel.addRow(Arrays.asList("2. Quantidade por dia de retweets da ï¿½ltima semana.", user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()).toArray());
+		tableModel.addRow(Arrays.asList("3. Quantidade por dia de favoritaï¿½ï¿½es da ï¿½ltima semana.", user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()).toArray());
+		tableModel.addRow(Arrays.asList("4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o ï¿½ltimo nome.", order.calculateMinAndMaxByName(user)).toArray());
 		tableModel.addRow(Arrays.asList("5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.", order.calculateMinAndMaxByDate(user)).toArray());
 
 		table = new JTable(tableModel);
@@ -84,12 +83,9 @@ public class BaseTwitterSmallAnalytics {
 					+ "\n3. Quantidade por dia de favoritaÃ§Ãµes da Ãºltima semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
 					+ "\n4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o Ãºltimo nome.\n" + order.calculateMinAndMaxByName(user)
 					+ "\n5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.\n" + order.calculateMinAndMaxByDate(user));
-	    if(JOptionPane.showConfirmDialog(null, "Deseja publicar essa informação no Twitter ?") == JOptionPane.YES_OPTION) {
-	    	postTweet(twitter, result, user);
+	    if(JOptionPane.showConfirmDialog(null, "Deseja publicar essa informaï¿½ï¿½o no Twitter ?") == JOptionPane.YES_OPTION) {
+		     postTweet(twitter, result, user, countResult);
 	    }
-=======
-	     postTweet(twitter, result, user, countResult);
->>>>>>> 2b792b425bb91dd7d73a58ba366c7948f3ffcb50
 	     
 	}
 
@@ -102,20 +98,6 @@ public class BaseTwitterSmallAnalytics {
 	 */
 	private void postTweet(Twitter twitter, QueryResult result,List<StatusJSONImpl> user, int countResult) {		
 		Order order = new Order();
-		
-		JTable table = null;
-		Object[] cols = { "Info.", "Quantidade" };
-		DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
-
-		tableModel.addRow(Arrays.asList("1. Quantidade por dia de tweets da ultima semana.", countResult).toArray());
-		tableModel.addRow(Arrays.asList("2. Quantidade por dia de retweets da ultima semana.", user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()).toArray());
-		tableModel.addRow(Arrays.asList("3. Quantidade por dia de favoritacoes da ultima semana.", user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()).toArray());
-		tableModel.addRow(Arrays.asList("4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o ultimo nome.", order.calculateMinAndMaxByName(user)).toArray());
-		tableModel.addRow(Arrays.asList("5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.", order.calculateMinAndMaxByDate(user)).toArray());
-
-		table = new JTable(tableModel);
-
-		JOptionPane.showMessageDialog(null, new JScrollPane(table));
 		
 	    Status status = null;
 //		try {
