@@ -61,29 +61,7 @@ public class BaseTwitterSmallAnalytics {
 			countResult = countResult + result.getCount();
 		}
 		
-		Order order = new Order();
-		
-		JTable table = null;
-		Object[] cols = { "Info.", "Quantidade" };
-		DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
-
-		tableModel.addRow(Arrays.asList("1. Quantidade por dia de tweets da última semana.", countResult).toArray());
-		tableModel.addRow(Arrays.asList("2. Quantidade por dia de retweets da última semana.", user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()).toArray());
-		tableModel.addRow(Arrays.asList("3. Quantidade por dia de favoritações da última semana.", user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()).toArray());
-		tableModel.addRow(Arrays.asList("4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o último nome.", order.calculateMinAndMaxByName(user)).toArray());
-		tableModel.addRow(Arrays.asList("5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.", order.calculateMinAndMaxByDate(user)).toArray());
-
-		table = new JTable(tableModel);
-
-		JOptionPane.showMessageDialog(null, new JScrollPane(table));
-
-		System.out.println("1. Quantidade por dia de tweets da Ãºltima semana.\n"+ countResult
-					+ "\n2. Quantidade por dia de retweets da Ãºltima semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()				
-					+ "\n3. Quantidade por dia de favoritaÃ§Ãµes da Ãºltima semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
-					+ "\n4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o Ãºltimo nome.\n" + order.calculateMinAndMaxByName(user)
-					+ "\n5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.\n" + order.calculateMinAndMaxByDate(user));
-	    
-//	     postTweet(twitter, result, user);
+	     postTweet(twitter, result, user, countResult);
 	     
 	}
 
@@ -94,20 +72,35 @@ public class BaseTwitterSmallAnalytics {
 	 * @param user
 	 * @param order
 	 */
-	private void postTweet(Twitter twitter, QueryResult result,List<StatusJSONImpl> user) {
+	private void postTweet(Twitter twitter, QueryResult result,List<StatusJSONImpl> user, int countResult) {		
 		Order order = new Order();
+		
+		JTable table = null;
+		Object[] cols = { "Info.", "Quantidade" };
+		DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
+
+		tableModel.addRow(Arrays.asList("1. Quantidade por dia de tweets da ultima semana.", countResult).toArray());
+		tableModel.addRow(Arrays.asList("2. Quantidade por dia de retweets da ultima semana.", user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()).toArray());
+		tableModel.addRow(Arrays.asList("3. Quantidade por dia de favoritacoes da ultima semana.", user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()).toArray());
+		tableModel.addRow(Arrays.asList("4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o ultimo nome.", order.calculateMinAndMaxByName(user)).toArray());
+		tableModel.addRow(Arrays.asList("5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.", order.calculateMinAndMaxByDate(user)).toArray());
+
+		table = new JTable(tableModel);
+
+		JOptionPane.showMessageDialog(null, new JScrollPane(table));
+		
 	    Status status = null;
-		try {
-			status = twitter.updateStatus("1.Tweets dia "+ result.getCount()
-		+ "\n2.ReTweets dia "+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum() 
-		+ "\n3.Favoritos dia "+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
-		+ "\n4.Sort por nome, exibindo primeiro e Ãºltimo " + order.calculateMinAndMaxByName(user)
-		+ "\n5.Sort por data, exibindo primeiro e Ãºltimo " + order.calculateMinAndMaxByDate(user));
-		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	     System.out.println("Successfully updated the status to [" + status.getText() + "].");
+//		try {
+//			status = twitter.updateStatus("1.Tweets dia "+ result.getCount()
+//		+ "\n2.ReTweets dia "+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum() 
+//		+ "\n3.Favoritos dia "+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
+//		+ "\n4.Sort por nome, exibindo primeiro e Ãºltimo " + order.calculateMinAndMaxByName(user)
+//		+ "\n5.Sort por data, exibindo primeiro e Ãºltimo " + order.calculateMinAndMaxByDate(user));
+//		} catch (TwitterException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	     System.out.println("Successfully updated the status to [" + status.getText() + "].");
 	}
 	
 	
