@@ -78,11 +78,6 @@ public class BaseTwitterSmallAnalytics {
 		jPaneScroll.setHorizontalScrollBar(jPaneScroll.createHorizontalScrollBar());
 		JOptionPane.showMessageDialog(null, jPaneScroll);
 
-		System.out.println("1. Quantidade por dia de tweets da última semana.\n"+ countResult
-					+ "\n2. Quantidade por dia de retweets da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()				
-					+ "\n3. Quantidade por dia de favoritações da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
-					+ "\n4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o último nome.\n" + order.calculateMinAndMaxByName(user)
-					+ "\n5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.\n" + order.calculateMinAndMaxByDate(user));
 	    if(JOptionPane.showConfirmDialog(null, "Deseja publicar essa informacao no Twitter ?") == JOptionPane.YES_OPTION) {
 		     postTweet(twitter, result, user, countResult);
 	    }
@@ -100,17 +95,17 @@ public class BaseTwitterSmallAnalytics {
 		Order order = new Order();
 		
 	    Status status = null;
-//		try {
-//			status = twitter.updateStatus("1.Tweets dia "+ result.getCount()
-//		+ "\n2.ReTweets dia "+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum() 
-//		+ "\n3.Favoritos dia "+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
-//		+ "\n4.Sort por nome, exibindo primeiro e último " + order.calculateMinAndMaxByName(user)
-//		+ "\n5.Sort por data, exibindo primeiro e último " + order.calculateMinAndMaxByDate(user));
-//		} catch (TwitterException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	     System.out.println("Successfully updated the status to [" + status.getText() + "].");
+		try {
+			status = twitter.updateStatus("1 "+ result.getCount()
+		+ "\n2 "+ user.stream().mapToInt(StatusJSONImpl::getReTweets).sum() 
+		+ "\n3 "+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
+		+ "\n4 " + order.calculateMinAndMaxByName(user)
+		+ "\n5 " + order.calculateMinAndMaxByDate(user));
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     System.out.println("Successfully updated the status to [" + status.getText() + "].");
 	}
 	
 	

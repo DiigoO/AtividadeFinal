@@ -68,10 +68,10 @@ public class Order{
 		@Override
 		public String toString() {
 			if(SortField.NAME.equals(sortField)){
-				return "StatusJSONImpl::nome [min=\"" + min.getNome() + "\", max=\"" + max.getNome() + "\"]";
+				return min.getNome() +" - "+ max.getNome();
 			}
 			if(SortField.DATE.equals(sortField)){
-				return "StatusJSONImpl::data [min=\"" + min.getDataStr() + "\", max=\"" + max.getDataStr() + "\"]";
+				return min.getDataStr() +" - "+ max.getDataStr();
 			}
 			
 			return "MinAndMax [min=" + min + ", max=" + max + "]";
