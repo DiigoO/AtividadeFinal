@@ -67,10 +67,10 @@ public class BaseTwitterSmallAnalytics {
 		Object[] cols = { "Info.", "Quantidade" };
 		DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
 
-		tableModel.addRow(Arrays.asList("1. Quantidade por dia de tweets da �ltima semana.", countResult).toArray());
-		tableModel.addRow(Arrays.asList("2. Quantidade por dia de retweets da �ltima semana.", user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()).toArray());
-		tableModel.addRow(Arrays.asList("3. Quantidade por dia de favorita��es da �ltima semana.", user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()).toArray());
-		tableModel.addRow(Arrays.asList("4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o �ltimo nome.", order.calculateMinAndMaxByName(user)).toArray());
+		tableModel.addRow(Arrays.asList("1. Quantidade por dia de tweets da ultima semana.", countResult).toArray());
+		tableModel.addRow(Arrays.asList("2. Quantidade por dia de retweets da ultima semana.", user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()).toArray());
+		tableModel.addRow(Arrays.asList("3. Quantidade por dia de favoritacoes da ultima semana.", user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()).toArray());
+		tableModel.addRow(Arrays.asList("4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o ultimo nome.", order.calculateMinAndMaxByName(user)).toArray());
 		tableModel.addRow(Arrays.asList("5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.", order.calculateMinAndMaxByDate(user)).toArray());
 
 		table = new JTable(tableModel);
@@ -83,7 +83,7 @@ public class BaseTwitterSmallAnalytics {
 					+ "\n3. Quantidade por dia de favoritações da última semana.\n"+ user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()
 					+ "\n4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o último nome.\n" + order.calculateMinAndMaxByName(user)
 					+ "\n5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.\n" + order.calculateMinAndMaxByDate(user));
-	    if(JOptionPane.showConfirmDialog(null, "Deseja publicar essa informa��o no Twitter ?") == JOptionPane.YES_OPTION) {
+	    if(JOptionPane.showConfirmDialog(null, "Deseja publicar essa informacao no Twitter ?") == JOptionPane.YES_OPTION) {
 		     postTweet(twitter, result, user, countResult);
 	    }
 	     
