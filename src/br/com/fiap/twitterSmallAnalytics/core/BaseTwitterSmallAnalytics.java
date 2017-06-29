@@ -75,10 +75,12 @@ public class BaseTwitterSmallAnalytics {
 		tableModel.addRow(Arrays.asList("5. Sort p/ data: ", order.calculateMinAndMaxByDate(user)).toArray());
 
 		table = new JTable(tableModel);
-		table.getColumnModel().getColumn(0).setWidth(300);
+		table.getColumnModel().getColumn(0).setWidth(100);
 		JScrollPane jPaneScroll = new JScrollPane(table);
 		jPaneScroll.setHorizontalScrollBar(jPaneScroll.createHorizontalScrollBar());
-		JOptionPane.showMessageDialog(null, jPaneScroll, "Info", JOptionPane.INFORMATION_MESSAGE);
+		jPaneScroll.setSize(new Dimension(800, 800));
+		jPaneScroll.setPreferredSize(new Dimension(800, jPaneScroll.getPreferredSize().height));
+		JOptionPane.showMessageDialog(null, jPaneScroll, "Info", JOptionPane.PLAIN_MESSAGE);
 
 	    if(JOptionPane.showConfirmDialog(null, "Deseja publicar essa informacao no Twitter ?", null, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 		     postTweet(twitter, result, user, countResult);
