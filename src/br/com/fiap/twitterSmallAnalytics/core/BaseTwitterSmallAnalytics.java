@@ -78,7 +78,7 @@ public class BaseTwitterSmallAnalytics {
 		jPaneScroll.setHorizontalScrollBar(jPaneScroll.createHorizontalScrollBar());
 		JOptionPane.showMessageDialog(null, jPaneScroll);
 
-	    if(JOptionPane.showConfirmDialog(null, "Deseja publicar essa informacao no Twitter ?") == JOptionPane.YES_OPTION) {
+	    if(JOptionPane.showConfirmDialog(null, "Deseja publicar essa informacao no Twitter ?", null, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 		     postTweet(twitter, result, user, countResult);
 	    }
 	     
