@@ -1,20 +1,25 @@
 package br.com.fiap.twitterSmallAnalytics;
 
-import java.io.FileNotFoundException;
-
+import javax.swing.JOptionPane;
 import br.com.fiap.twitterSmallAnalytics.core.BaseTwitterSmallAnalytics;
-import twitter4j.TwitterException;
 
 public class App {
 
+	/**
+	 * MAIN da aplicacao
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		BaseTwitterSmallAnalytics base = new BaseTwitterSmallAnalytics();
 		try {
-			base.searchTweets("#java8");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (TwitterException e) {
+			String res = JOptionPane.showInputDialog(null, "Insira sua #hashtag: ");
+			if(!res.isEmpty()){
+				base.searchTweets("res");
+			}else{
+				JOptionPane.showMessageDialog(null, "Não foi passada nenhuma informação.");
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

@@ -67,11 +67,11 @@ public class BaseTwitterSmallAnalytics {
 		Object[] cols = { "Info.", "Quantidade" };
 		DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
 
-		tableModel.addRow(Arrays.asList("1. Quantidade por dia de tweets da ultima semana.", countResult).toArray());
-		tableModel.addRow(Arrays.asList("2. Quantidade por dia de retweets da ultima semana.", user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()).toArray());
-		tableModel.addRow(Arrays.asList("3. Quantidade por dia de favoritacoes da ultima semana.", user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()).toArray());
-		tableModel.addRow(Arrays.asList("4. Ordenar os tweets pelo nome do autor, e exibir o primeiro nome e o ultimo nome.", order.calculateMinAndMaxByName(user)).toArray());
-		tableModel.addRow(Arrays.asList("5. Ordenar os tweets por data, e exibir a data mais recente e a menos recente.", order.calculateMinAndMaxByDate(user)).toArray());
+		tableModel.addRow(Arrays.asList("1. Tweets: ", countResult).toArray());
+		tableModel.addRow(Arrays.asList("2. Retweets: ", user.stream().mapToInt(StatusJSONImpl::getReTweets).sum()).toArray());
+		tableModel.addRow(Arrays.asList("3. Favoritacoes: ", user.stream().mapToInt(StatusJSONImpl::getFavoritos).sum()).toArray());
+		tableModel.addRow(Arrays.asList("4. Sort p/ nome: ", order.calculateMinAndMaxByName(user)).toArray());
+		tableModel.addRow(Arrays.asList("5. Sort p/ data: ", order.calculateMinAndMaxByDate(user)).toArray());
 
 		table = new JTable(tableModel);
 		JScrollPane jPaneScroll = new JScrollPane(table);
@@ -102,10 +102,10 @@ public class BaseTwitterSmallAnalytics {
 		+ "\n4 " + order.calculateMinAndMaxByName(user)
 		+ "\n5 " + order.calculateMinAndMaxByDate(user));
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		    JOptionPane.showMessageDialog(null, "Erro ao tentar postar tweet [" + e + "].");
 		}
-	     System.out.println("Successfully updated the status to [" + status.getText() + "].");
+	    JOptionPane.showMessageDialog(null, "Tweet postado com sucesso[" + status.getText() + "].");
 	}
 	
 	
