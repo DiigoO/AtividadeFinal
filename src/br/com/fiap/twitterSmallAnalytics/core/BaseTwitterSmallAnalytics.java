@@ -1,5 +1,6 @@
 package br.com.fiap.twitterSmallAnalytics.core;
 
+import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -74,9 +75,10 @@ public class BaseTwitterSmallAnalytics {
 		tableModel.addRow(Arrays.asList("5. Sort p/ data: ", order.calculateMinAndMaxByDate(user)).toArray());
 
 		table = new JTable(tableModel);
+		table.getColumnModel().getColumn(0).setWidth(300);
 		JScrollPane jPaneScroll = new JScrollPane(table);
 		jPaneScroll.setHorizontalScrollBar(jPaneScroll.createHorizontalScrollBar());
-		JOptionPane.showMessageDialog(null, jPaneScroll);
+		JOptionPane.showMessageDialog(null, jPaneScroll, "Info", JOptionPane.INFORMATION_MESSAGE);
 
 	    if(JOptionPane.showConfirmDialog(null, "Deseja publicar essa informacao no Twitter ?", null, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 		     postTweet(twitter, result, user, countResult);
