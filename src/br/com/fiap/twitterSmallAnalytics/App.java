@@ -17,7 +17,7 @@ public class App {
 			if(!res.isEmpty()){
 				base.searchTweets("res");
 			}else{
-				JOptionPane.showMessageDialog(null, "Não foi passada nenhuma informação.");
+				JOptionPane.showMessageDialog(null, "Nao foi passada nenhuma informacao.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

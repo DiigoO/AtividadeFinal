@@ -54,17 +54,11 @@ public class BaseTwitterSmallAnalytics {
 			System.out.println(query);
 			
 			QueryResult result = null;
+			
 			try {
 				result = twitter.search(query);
-			} catch (TwitterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				try {
-					Thread.sleep(900000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			} catch (TwitterException e1) {
+				e1.printStackTrace();
 			}
 			
 			while(result.hasNext()){
@@ -86,7 +80,6 @@ public class BaseTwitterSmallAnalytics {
 				try {
 					result = twitter.search(query);
 				} catch (TwitterException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				countResult = countResult + result.getCount();
